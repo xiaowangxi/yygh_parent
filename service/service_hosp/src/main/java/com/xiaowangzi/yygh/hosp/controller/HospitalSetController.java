@@ -4,6 +4,7 @@ import com.alibaba.excel.util.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xiaowangzi.yygh.common.result.Result;
+import com.xiaowangzi.yygh.common.utils.MD5;
 import com.xiaowangzi.yygh.hosp.service.HospitalSetService;
 import com.xiaowangzi.yygh.model.hosp.HospitalSet;
 import com.xiaowangzi.yygh.vo.hosp.HospitalSetQueryVo;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,7 +44,7 @@ public class HospitalSetController {
     @DeleteMapping("{id}")
     public Result removeHospSet(@PathVariable Long id) {
         boolean flag = hospitalSetService.removeById(id);
-        if(flag) {
+        if (flag) {
             return Result.ok();
         } else {
             return Result.fail();
@@ -56,16 +58,16 @@ public class HospitalSetController {
                                   @RequestBody
                                           (required = false) HospitalSetQueryVo hospitalSetQueryVo) {
         //创建page对象，传递当前页，每页记录数
-        Page<HospitalSet> page = new Page<>(current,limit);
+        Page<HospitalSet> page = new Page<>(current, limit);
         //构建条件
         QueryWrapper<HospitalSet> wrapper = new QueryWrapper<>();
         String hosname = hospitalSetQueryVo.getHosname();//医院名称
         String hoscode = hospitalSetQueryVo.getHoscode();//医院编号
-        if(!StringUtils.isEmpty(hosname)) {
-            wrapper.like("hosname",hospitalSetQueryVo.getHosname());
+        if (!StringUtils.isEmpty(hosname)) {
+            wrapper.like("hosname", hospitalSetQueryVo.getHosname());
         }
-        if(!StringUtils.isEmpty(hoscode)) {
-            wrapper.eq("hoscode",hospitalSetQueryVo.getHoscode());
+        if (!StringUtils.isEmpty(hoscode)) {
+            wrapper.eq("hoscode", hospitalSetQueryVo.getHoscode());
         }
         //调用方法实现分页查询
         Page<HospitalSet> pageHospitalSet = hospitalSetService.page(page, wrapper);
@@ -73,22 +75,23 @@ public class HospitalSetController {
         return Result.ok(pageHospitalSet);
     }
 
-//    //4 添加医院设置
-//    @PostMapping("saveHospitalSet")
-//    public Result saveHospitalSet(@RequestBody HospitalSet hospitalSet) {
-//        //设置状态 1 使用 0 不能使用
-//        hospitalSet.setStatus(1);
-//        //签名秘钥
-//        Random random = new Random();
-//        hospitalSet.setSignKey(MD5.encrypt(System.currentTimeMillis()+""+random.nextInt(1000)));
-//        //调用service
+    //4 添加医院设置
+    @PostMapping("saveHospitalSet")
+    public Result saveHospitalSet(@RequestBody HospitalSet hospitalSet) {
+        //设置状态 1 使用 0 不能使用
+        hospitalSet.setStatus(1);
+        //签名秘钥
+        Random random = new Random();
+        hospitalSet.setSignKey(MD5.encrypt(System.currentTimeMillis() + "" + random.nextInt(1000)));
+        //调用service
 //        boolean save = hospitalSetService.save(hospitalSet);
-//        if(save) {
+//        if (save) {
 //            return Result.ok();
 //        } else {
 //            return Result.fail();
 //        }
-//    }
+        return hospitalSetService.save(hospitalSet) ? Result.ok() : Result.fail();
+    }
 
     //5 根据id获取医院设置
     @GetMapping("getHospSet/{id}")
@@ -101,7 +104,7 @@ public class HospitalSetController {
     @PostMapping("updateHospitalSet")
     public Result updateHospitalSet(@RequestBody HospitalSet hospitalSet) {
         boolean flag = hospitalSetService.updateById(hospitalSet);
-        if(flag) {
+        if (flag) {
             return Result.ok();
         } else {
             return Result.fail();
@@ -112,6 +115,29 @@ public class HospitalSetController {
     @DeleteMapping("batchRemove")
     public Result batchRemoveHospitalSet(@RequestBody List<Long> idList) {
         hospitalSetService.removeByIds(idList);
+        return Result.ok();
+    }
+
+    //8 医院设置锁定和解锁
+    @PutMapping("lockHospitalSet/{id}/{status}")
+    public Result lockHospitalSet(@PathVariable Long id,
+                                  @PathVariable Integer status) {
+        //根据id查询医院设置信息
+        HospitalSet hospitalSet = hospitalSetService.getById(id);
+        //设置状态
+        hospitalSet.setStatus(status);
+        //调用方法
+        hospitalSetService.updateById(hospitalSet);
+        return Result.ok();
+    }
+
+    //9 发送签名秘钥
+    @PutMapping("sendKey/{id}")
+    public Result lockHospitalSet(@PathVariable Long id) {
+        HospitalSet hospitalSet = hospitalSetService.getById(id);
+        String signKey = hospitalSet.getSignKey();
+        String hoscode = hospitalSet.getHoscode();
+        //TODO 发送短信
         return Result.ok();
     }
 }
