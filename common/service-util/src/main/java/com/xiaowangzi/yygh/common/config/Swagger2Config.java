@@ -19,11 +19,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class Swagger2Config {
 
     @Bean
-    public Docket webApiConfig(){
+    public Docket dictApiConfig(){
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("webApi")
-                .apiInfo(webApiInfo())
+                .groupName("dict")
+                .apiInfo(dictApiInfo())
                 .select()
                 //只显示api路径下的页面
                 .paths(Predicates.and(PathSelectors.regex("/api/.*")))
@@ -44,7 +44,7 @@ public class Swagger2Config {
 
     }
 
-    private ApiInfo webApiInfo(){
+    private ApiInfo dictApiInfo(){
 
         return new ApiInfoBuilder()
                 .title("网站-API文档")
