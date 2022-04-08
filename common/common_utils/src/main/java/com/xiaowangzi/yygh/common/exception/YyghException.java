@@ -1,5 +1,6 @@
 package com.xiaowangzi.yygh.common.exception;
 
+import com.xiaowangzi.yygh.common.result.ResultCodeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,15 +28,15 @@ public class YyghException extends RuntimeException {
         this.code = code;
     }
 
-//    /**
-//     * 接收枚举类型对象
-//     *
-//     * @param resultCodeEnum
-//     */
-//    public YyghException(ResultCodeEnum resultCodeEnum) {
-//        super(resultCodeEnum.getMessage());
-//        this.code = resultCodeEnum.getCode();
-//    }
+    /**
+     * 接收枚举类型对象
+     *
+     * @param resultCodeEnum
+     */
+    public YyghException(ResultCodeEnum resultCodeEnum) {
+        super(resultCodeEnum.getMessage());
+        this.code = resultCodeEnum.getCode();
+    }
 
     @Override
     public String toString() {
