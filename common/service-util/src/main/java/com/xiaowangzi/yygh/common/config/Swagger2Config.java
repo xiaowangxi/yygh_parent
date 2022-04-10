@@ -22,7 +22,7 @@ public class Swagger2Config {
     public Docket dictApiConfig(){
 
         return new Docket(DocumentationType.SWAGGER_2)
-                .groupName("dict")
+                .groupName("webApi")
                 .apiInfo(dictApiInfo())
                 .select()
                 //只显示api路径下的页面
