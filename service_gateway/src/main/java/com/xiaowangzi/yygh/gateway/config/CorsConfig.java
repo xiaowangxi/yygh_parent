@@ -7,6 +7,9 @@ import org.springframework.web.cors.reactive.CorsWebFilter;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.util.pattern.PathPatternParser;
 
+/**
+ * 允许跨域访问配置
+ */
 @Configuration
 public class CorsConfig {
     @Bean

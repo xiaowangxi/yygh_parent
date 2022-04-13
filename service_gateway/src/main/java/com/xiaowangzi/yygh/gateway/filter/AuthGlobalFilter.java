@@ -23,9 +23,6 @@ import java.util.List;
  * <p>
  * 全局Filter，统一处理会员登录与外部不允许访问的服务
  * </p>
- *
- * @author qy
- * @since 2019-11-21
  */
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {

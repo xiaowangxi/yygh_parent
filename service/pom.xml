@@ -16,6 +16,7 @@
         <module>service_hosp</module>
         <module>service_cmn</module>
         <module>service_msm</module>
+        <module>service-oss</module>
     </modules>
 
     <dependencies>
@@ -69,6 +70,11 @@
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.xiaowangzi</groupId>
+            <artifactId>service_cmn_client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>
