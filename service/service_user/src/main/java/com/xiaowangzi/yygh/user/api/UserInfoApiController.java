@@ -1,4 +1,4 @@
-package com.xiaowangzi.yygh.user.controller;
+package com.xiaowangzi.yygh.user.api;
 
 import com.xiaowangzi.yygh.common.result.Result;
 import com.xiaowangzi.yygh.common.utils.AuthContextHolder;
