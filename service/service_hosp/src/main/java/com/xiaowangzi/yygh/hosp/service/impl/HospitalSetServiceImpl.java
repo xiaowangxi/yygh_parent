@@ -7,7 +7,7 @@ import com.xiaowangzi.yygh.common.result.ResultCodeEnum;
 import com.xiaowangzi.yygh.hosp.mapper.HospitalSetMapper;
 import com.xiaowangzi.yygh.hosp.service.HospitalSetService;
 import com.xiaowangzi.yygh.model.hosp.HospitalSet;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.xiaowangzi.yygh.vo.order.SignInfoVo;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +22,20 @@ public class HospitalSetServiceImpl extends ServiceImpl<HospitalSetMapper, Hospi
             throw new YyghException(ResultCodeEnum.HOSPITAL_LOCK);
         }
         return hospitalSet.getSignKey();
+    }
+
+    @Override
+    public SignInfoVo getSignInfoVo(String hoscode) {
+        QueryWrapper<HospitalSet> wrapper = new QueryWrapper<>();
+        wrapper.eq("hoscode",hoscode);
+        HospitalSet hospitalSet = baseMapper.selectOne(wrapper);
+        if(null == hospitalSet) {
+            throw new YyghException(ResultCodeEnum.HOSPITAL_OPEN);
+        }
+        SignInfoVo signInfoVo = new SignInfoVo();
+        signInfoVo.setApiUrl(hospitalSet.getApiUrl());
+        signInfoVo.setSignKey(hospitalSet.getSignKey());
+        return signInfoVo;
     }
 
     /**

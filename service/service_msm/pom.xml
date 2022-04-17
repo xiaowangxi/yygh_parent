@@ -22,6 +22,12 @@
             <artifactId>javax.mail</artifactId>
             <version>1.5.6</version>
         </dependency>
+        <!--rabbitmq消息队列-->
+        <dependency>
+            <groupId>com.xiaowangzi</groupId>
+            <artifactId>rabbit-util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 </project>
