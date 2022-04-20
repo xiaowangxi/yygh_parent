@@ -24,8 +24,8 @@ public class SendEmailHelper {
             email.setHostName("smtp.qq.com");//邮箱的SMTP服务器，一般126邮箱的是smtp.126.com，qq邮箱为smtp.qq.com
             email.setCharset("utf-8");
             email.addTo(account);//收件人
-            email.setFrom("893511872@qq.com", "xiaowangzi");//发件人,用户名可随便填写
-            email.setAuthentication("893511872@qq.com", "crbnhrxpofyibbaj");
+            email.setFrom("00000000@qq.com", "xiaowangzi");//发件人,用户名可随便填写
+            email.setAuthentication("00000000@qq.com", "");
             email.setSubject("登陆验证码");
             email.setMsg(message);
             email.send();
