@@ -80,3 +80,6 @@
 
 12、定时任务
 
+### 系统分层结构图
+![image](https://github.com/xiaowangxi/yygh_parent/blob/main/common/common_utils/src/main/resources/img/%E5%B0%9A%E5%8C%BB%E9%80%9A%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E5%88%86%E5%B1%82%E5%9B%BE.png)
+
